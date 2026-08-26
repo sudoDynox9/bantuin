@@ -109,14 +109,21 @@
             line-height: 1.6;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 16px;
-            background: #111827;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
+.button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 11px 17px;
+    background: #111827;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: opacity 0.2s ease;
+}
+
+.button:hover {
+    opacity: 0.85;
+}
 
         footer {
             text-align: center;
@@ -166,17 +173,21 @@
         <div class="tool-grid">
 
             <article class="tool-card">
-                <h3>Kalkulator THR</h3>
+    <h3>Kalkulator THR</h3>
 
-                <p>
-                    Hitung perkiraan Tunjangan Hari Raya
-                    dengan mudah.
-                </p>
+    <p>
+        Hitung perkiraan Tunjangan Hari Raya
+        berdasarkan upah dan masa kerja.
+    </p>
 
-                <a class="button" href="kalkulator/thr.html">
-                    Gunakan
-                </a>
-            </article>
+    <a
+        class="button"
+        href="kalkulator/thr.html"
+        aria-label="Buka Kalkulator THR"
+    >
+        Hitung THR →
+    </a>
+</article>
 
             <article class="tool-card">
                 <h3>Kalkulator Gaji</h3>
