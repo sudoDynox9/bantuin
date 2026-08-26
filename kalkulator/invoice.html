@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Generator Invoice Bantuin untuk membuat invoice sederhana secara gratis."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <title>Generator Invoice Gratis - Bantuin</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="icon"
+        href="../favicon.svg"
+        type="image/svg+xml"
+    >
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a
+            class="logo"
+            href="../index.html"
+        >
+            Bantuin
+        </a>
+
+        <a href="../index.html">
+            ← Kembali
+        </a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="calculator-intro">
+
+        <h1>
+            Generator Invoice
+        </h1>
+
+        <p>
+            Buat invoice sederhana dengan cepat dan gratis.
+        </p>
+
+    </section>
+
+    <section class="calculator invoice-form">
+
+        <form id="invoiceForm">
+
+            <div class="form-group">
+
+                <label for="businessName">
+                    Nama usaha
+                </label>
+
+                <input
+                    type="text"
+                    id="businessName"
+                    name="businessName"
+                    maxlength="100"
+                    autocomplete="organization"
+                    placeholder="Contoh: Bantuin Store"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="businessInfo">
+                    Informasi usaha
+                </label>
+
+                <span class="description">
+                    Contoh: alamat, nomor telepon, atau email.
+                </span>
+
+                <textarea
+                    id="businessInfo"
+                    name="businessInfo"
+                    rows="3"
+                    maxlength="300"
+                    placeholder="Jakarta&#10;0812-xxxx-xxxx&#10;email@contoh.com"
+                ></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="customerName">
+                    Nama pelanggan
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    name="customerName"
+                    maxlength="100"
+                    autocomplete="name"
+                    placeholder="Contoh: Syarifuddin"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="invoiceNumber">
+                    Nomor invoice
+                </label>
+
+                <input
+                    type="text"
+                    id="invoiceNumber"
+                    name="invoiceNumber"
+                    maxlength="50"
+                    placeholder="Contoh: INV-001"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="invoiceDate">
+                    Tanggal invoice
+                </label>
+
+                <input
+                    type="date"
+                    id="invoiceDate"
+                    name="invoiceDate"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Item invoice
+                </label>
+
+                <div id="items"></div>
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="addItem"
+                >
+                    + Tambah item
+                </button>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="discount">
+                    Diskon
+                </label>
+
+                <input
+                    type="number"
+                    id="discount"
+                    name="discount"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    value="0"
+                    placeholder="0"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="tax">
+                    Pajak (%)
+                </label>
+
+                <span class="description">
+                    Masukkan 0 jika tidak ada pajak.
+                </span>
+
+                <input
+                    type="number"
+                    id="tax"
+                    name="tax"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    inputmode="decimal"
+                    value="0"
+                    placeholder="Contoh: 11"
+                >
+
+            </div>
+
+            <button type="submit">
+                Buat Invoice
+            </button>
+
+            <div
+                id="error"
+                class="error"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+    </section>
+
+    <section
+        id="invoicePreview"
+        class="invoice-preview"
+        aria-live="polite"
+    >
+
+        <div class="invoice-paper">
+
+            <div class="invoice-header">
+
+                <div>
+                    <h2 id="previewBusinessName">
+                        Nama Usaha
+                    </h2>
+
+                    <p id="previewBusinessInfo"></p>
+                </div>
+
+                <div>
+                    <strong>INVOICE</strong>
+
+                    <p id="previewInvoiceNumber"></p>
+                    <p id="previewInvoiceDate"></p>
+                </div>
+
+            </div>
+
+            <div class="invoice-customer">
+
+                <strong>Ditagihkan kepada:</strong>
+
+                <p id="previewCustomerName"></p>
+
+            </div>
+
+            <table class="invoice-table">
+
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Harga</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody id="previewItems"></tbody>
+
+            </table>
+
+            <div class="invoice-total">
+
+                <div>
+                    Subtotal
+                    <strong id="previewSubtotal">
+                        Rp0
+                    </strong>
+                </div>
+
+                <div>
+                    Diskon
+                    <strong id="previewDiscount">
+                        Rp0
+                    </strong>
+                </div>
+
+                <div>
+                    Pajak
+                    <strong id="previewTax">
+                        Rp0
+                    </strong>
+                </div>
+
+                <div class="invoice-grand-total">
+                    Total
+                    <strong id="previewTotal">
+                        Rp0
+                    </strong>
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="button print-button"
+                id="printInvoice"
+            >
+                Cetak / Simpan PDF
+            </button>
+
+        </div>
+
+    </section>
+
+    <section class="info">
+
+        <h2>
+            Tentang Generator Invoice
+        </h2>
+
+        <p>
+            Generator Invoice Bantuin membantu membuat
+            invoice sederhana tanpa perlu mendaftar akun.
+        </p>
+
+        <p>
+            Data invoice diproses langsung di browser.
+            Bantuin tidak mengirim data invoice ke server
+            pada versi ini.
+        </p>
+
+        <p>
+            Gunakan fitur cetak browser untuk mencetak invoice
+            atau memilih opsi "Save as PDF".
+        </p>
+
+        <div class="source">
+            Generator Invoice Bantuin versi 1.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Bantuin. Semua hak dilindungi.
+</footer>
+
+<script
+    src="../js/invoice.js"
+    defer
+></script>
+
+</body>
+</html>
