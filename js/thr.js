@@ -28,52 +28,54 @@ function clearError() {
     error.classList.remove("show");
 }
 
-form.addEventListener("submit", function (event) {
-    event.preventDefault();
+if (form) {
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    clearError();
+        clearError();
 
-    const upah = Number(upahInput.value);
-    const masaKerja = Number(masaKerjaInput.value);
+        const upah = Number(upahInput.value);
+        const masaKerja = Number(masaKerjaInput.value);
 
-    if (!Number.isFinite(upah) || upah <= 0) {
-        showError("Masukkan jumlah upah yang valid.");
-        return;
-    }
+        if (!Number.isFinite(upah) || upah <= 0) {
+            showError("Masukkan jumlah upah yang valid.");
+            return;
+        }
 
-    if (!Number.isFinite(masaKerja) || masaKerja < 1) {
-        showError("Masa kerja minimal 1 bulan.");
-        return;
-    }
+        if (!Number.isFinite(masaKerja) || masaKerja < 1) {
+            showError("Masa kerja minimal 1 bulan.");
+            return;
+        }
 
-    if (masaKerja > 600) {
-        showError("Masa kerja yang dimasukkan terlalu besar.");
-        return;
-    }
+        if (masaKerja > 600) {
+            showError("Masa kerja yang dimasukkan terlalu besar.");
+            return;
+        }
 
-    let thr;
+        let thr;
 
-    if (masaKerja >= 12) {
-        thr = upah;
-    } else {
-        thr = (masaKerja / 12) * upah;
-    }
+        if (masaKerja >= 12) {
+            thr = upah;
+        } else {
+            thr = (masaKerja / 12) * upah;
+        }
 
-    amount.textContent = formatRupiah(thr);
+        amount.textContent = formatRupiah(thr);
 
-    if (masaKerja >= 12) {
-        calculation.textContent =
-            "Masa kerja 12 bulan atau lebih → 1 bulan upah (" +
-            formatRupiah(upah) +
-            ").";
-    } else {
-        calculation.textContent =
-            masaKerja +
-            "/12 × " +
-            formatRupiah(upah) +
-            " = " +
-            formatRupiah(thr);
-    }
+        if (masaKerja >= 12) {
+            calculation.textContent =
+                "Masa kerja 12 bulan atau lebih → 1 bulan upah (" +
+                formatRupiah(upah) +
+                ").";
+        } else {
+            calculation.textContent =
+                masaKerja +
+                "/12 × " +
+                formatRupiah(upah) +
+                " = " +
+                formatRupiah(thr);
+        }
 
-    result.classList.add("show");
-});
+        result.classList.add("show");
+    });
+}
