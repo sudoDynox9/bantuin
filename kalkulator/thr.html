@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Kalkulator THR Bantuin untuk menghitung perkiraan Tunjangan Hari Raya berdasarkan masa kerja dan upah."
+    >
+
+    <meta name="robots" content="index, follow">
+
+    <title>Kalkulator THR 2026 - Bantuin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fa;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: auto;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #374151;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 50px 24px 80px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .intro h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #6b7280;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .calculator {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            display: block;
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid #9ca3af;
+            outline-offset: 1px;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #111827;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result {
+            display: none;
+            margin-top: 28px;
+            padding: 24px;
+            border-radius: 14px;
+            background: #f3f4f6;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h2 {
+            margin-top: 0;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .calculation {
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .error {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #fef2f2;
+            color: #991b1b;
+            font-size: 14px;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .info {
+            max-width: 600px;
+            margin: 35px auto 0;
+            padding: 24px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+        }
+
+        .info h2 {
+            margin-top: 0;
+        }
+
+        .info li {
+            margin-bottom: 8px;
+        }
+
+        .source {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .calculator {
+                padding: 22px;
+            }
+
+            .amount {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a class="logo" href="../index.html">Bantuin</a>
+        <a href="../index.html">← Kembali</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h1>Kalkulator THR</h1>
+
+        <p>
+            Hitung perkiraan Tunjangan Hari Raya berdasarkan
+            upah dan masa kerja.
+        </p>
+    </section>
+
+    <section class="calculator">
+
+        <form id="thrForm">
+
+            <div class="form-group">
+                <label for="upah">
+                    Upah 1 bulan
+                </label>
+
+                <span class="description">
+                    Masukkan upah pokok + tunjangan tetap.
+                </span>
+
+                <input
+                    type="number"
+                    id="upah"
+                    name="upah"
+                    min="1"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 5000000"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="masaKerja">
+                    Masa kerja
+                </label>
+
+                <span class="description">
+                    Masukkan jumlah bulan masa kerja secara terus-menerus.
+                </span>
+
+                <input
+                    type="number"
+                    id="masaKerja"
+                    name="masaKerja"
+                    min="1"
+                    max="600"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 8"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Hitung THR
+            </button>
+
+            <div
+                id="error"
+                class="error"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+        <div
+            id="result"
+            class="result"
+            aria-live="polite"
+        >
+            <h2>Perkiraan THR</h2>
+
+            <div id="amount" class="amount">
+                Rp0
+            </div>
+
+            <div id="calculation" class="calculation"></div>
+        </div>
+
+    </section>
+
+    <section class="info">
+
+        <h2>Bagaimana cara menghitung THR?</h2>
+
+        <p>
+            Secara umum, pekerja dengan masa kerja 12 bulan atau
+            lebih mendapatkan THR sebesar 1 bulan upah.
+        </p>
+
+        <p>
+            Untuk masa kerja minimal 1 bulan tetapi kurang dari
+            12 bulan, THR dihitung secara proporsional:
+        </p>
+
+        <p>
+            <strong>
+                Masa kerja ÷ 12 × 1 bulan upah
+            </strong>
+        </p>
+
+        <p>
+            Kalkulator ini memberikan perkiraan berdasarkan
+            ketentuan umum dan tidak menggantikan kebijakan
+            perusahaan atau konsultasi ketenagakerjaan.
+        </p>
+
+        <div class="source">
+            Dasar informasi: Permenaker No. 6 Tahun 2016 dan
+            ketentuan pengupahan yang berlaku.
+            Terakhir diperiksa: 2026.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Bantuin. Semua hak dilindungi.
+</footer>
+
+<script>
+    "use strict";
+
+    const form = document.getElementById("thrForm");
+    const upahInput = document.getElementById("upah");
+    const masaKerjaInput = document.getElementById("masaKerja");
+
+    const result = document.getElementById("result");
+    const amount = document.getElementById("amount");
+    const calculation = document.getElementById("calculation");
+    const error = document.getElementById("error");
+
+    function formatRupiah(value) {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }).format(value);
+    }
+
+    function showError(message) {
+        error.textContent = message;
+        error.classList.add("show");
+        result.classList.remove("show");
+    }
+
+    function clearError() {
+        error.textContent = "";
+        error.classList.remove("show");
+    }
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        clearError();
+
+        const upah = Number(upahInput.value);
+        const masaKerja = Number(masaKerjaInput.value);
+
+        if (!Number.isFinite(upah) || upah <= 0) {
+            showError("Masukkan jumlah upah yang valid.");
+            return;
+        }
+
+        if (!Number.isFinite(masaKerja) || masaKerja < 1) {
+            showError("Masa kerja minimal 1 bulan.");
+            return;
+        }
+
+        if (masaKerja > 600) {
+            showError("Masa kerja yang dimasukkan terlalu besar.");
+            return;
+        }
+
+        let thr;
+
+        if (masaKerja >= 12) {
+            thr = upah;
+        } else {
+            thr = (masaKerja / 12) * upah;
+        }
+
+        amount.textContent = formatRupiah(thr);
+
+        if (masaKerja >= 12) {
+            calculation.textContent =
+                "Masa kerja 12 bulan atau lebih → 1 bulan upah (" +
+                formatRupiah(upah) +
+                ").";
+        } else {
+            calculation.textContent =
+                masaKerja +
+                "/12 × " +
+                formatRupiah(upah) +
+                " = " +
+                formatRupiah(thr);
+        }
+
+        result.classList.add("show");
+    });
+</script>
+
+</body>
+</html>
