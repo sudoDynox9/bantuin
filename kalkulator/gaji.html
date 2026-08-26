@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Kalkulator Gaji Bersih Bantuin untuk menghitung perkiraan gaji yang diterima setelah tunjangan dan potongan."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <title>Kalkulator Gaji Bersih - Bantuin</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="icon"
+        href="../favicon.svg"
+        type="image/svg+xml"
+    >
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a
+            class="logo"
+            href="../index.html"
+        >
+            Bantuin
+        </a>
+
+        <a href="../index.html">
+            ← Kembali
+        </a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="calculator-intro">
+
+        <h1>
+            Kalkulator Gaji Bersih
+        </h1>
+
+        <p>
+            Hitung perkiraan gaji yang kamu terima
+            setelah tunjangan dan potongan.
+        </p>
+
+    </section>
+
+    <section class="calculator">
+
+        <form id="gajiForm">
+
+            <div class="form-group">
+
+                <label for="gajiPokok">
+                    Gaji pokok
+                </label>
+
+                <span class="description">
+                    Masukkan gaji pokok per bulan.
+                </span>
+
+                <input
+                    type="number"
+                    id="gajiPokok"
+                    name="gajiPokok"
+                    min="1"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 5000000"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="tunjangan">
+                    Tunjangan tetap
+                </label>
+
+                <span class="description">
+                    Masukkan total tunjangan tetap per bulan.
+                    Jika tidak ada, masukkan 0.
+                </span>
+
+                <input
+                    type="number"
+                    id="tunjangan"
+                    name="tunjangan"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 1000000"
+                    value="0"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="bpjs">
+                    Potongan BPJS
+                </label>
+
+                <span class="description">
+                    Masukkan total potongan BPJS per bulan.
+                </span>
+
+                <input
+                    type="number"
+                    id="bpjs"
+                    name="bpjs"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 200000"
+                    value="0"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="potonganLain">
+                    Potongan lainnya
+                </label>
+
+                <span class="description">
+                    Masukkan total potongan lain per bulan.
+                    Jika tidak ada, masukkan 0.
+                </span>
+
+                <input
+                    type="number"
+                    id="potonganLain"
+                    name="potonganLain"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 100000"
+                    value="0"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                Hitung Gaji Bersih
+            </button>
+
+            <div
+                id="error"
+                class="error"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+        <div
+            id="result"
+            class="result"
+            aria-live="polite"
+        >
+
+            <h2>
+                Perkiraan Gaji Bersih
+            </h2>
+
+            <div
+                id="amount"
+                class="amount"
+            >
+                Rp0
+            </div>
+
+            <div
+                id="calculation"
+                class="calculation"
+            ></div>
+
+        </div>
+
+    </section>
+
+    <section class="info">
+
+        <h2>
+            Bagaimana cara menghitungnya?
+        </h2>
+
+        <p>
+            Kalkulator ini menggunakan perhitungan sederhana:
+        </p>
+
+        <p>
+            <strong>
+                Gaji pokok + tunjangan - BPJS - potongan lain
+            </strong>
+        </p>
+
+        <p>
+            Hasil yang ditampilkan merupakan perkiraan
+            berdasarkan angka yang kamu masukkan.
+        </p>
+
+        <p>
+            Kalkulator ini belum menghitung PPh 21 secara otomatis.
+            Perhitungan pajak dapat berbeda berdasarkan kondisi
+            dan status perpajakan masing-masing pekerja.
+        </p>
+
+        <div class="source">
+            Kalkulator Bantuin versi 1.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Bantuin. Semua hak dilindungi.
+</footer>
+
+<script
+    src="../js/gaji.js"
+    defer
+></script>
+
+</body>
+</html>
