@@ -1,34 +1,45 @@
-"use strict";
+(() => {
+    "use strict";
 
-const form = document.getElementById("thrForm");
-const upahInput = document.getElementById("upah");
-const masaKerjaInput = document.getElementById("masaKerja");
+    const form = document.getElementById("thrForm");
 
-const result = document.getElementById("result");
-const amount = document.getElementById("amount");
-const calculation = document.getElementById("calculation");
-const error = document.getElementById("error");
+    if (!form) {
+        return;
+    }
 
-function formatRupiah(value) {
-    return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        maximumFractionDigits: 0
-    }).format(value);
-}
+    // Hindari memasang event listener lebih dari sekali
+    if (form.dataset.thrInitialized === "true") {
+        return;
+    }
 
-function showError(message) {
-    error.textContent = message;
-    error.classList.add("show");
-    result.classList.remove("show");
-}
+    form.dataset.thrInitialized = "true";
 
-function clearError() {
-    error.textContent = "";
-    error.classList.remove("show");
-}
+    const upahInput = document.getElementById("upah");
+    const masaKerjaInput = document.getElementById("masaKerja");
+    const result = document.getElementById("result");
+    const amount = document.getElementById("amount");
+    const calculation = document.getElementById("calculation");
+    const error = document.getElementById("error");
 
-if (form) {
+    function formatRupiah(value) {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }).format(value);
+    }
+
+    function showError(message) {
+        error.textContent = message;
+        error.classList.add("show");
+        result.classList.remove("show");
+    }
+
+    function clearError() {
+        error.textContent = "";
+        error.classList.remove("show");
+    }
+
     form.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -52,13 +63,9 @@ if (form) {
             return;
         }
 
-        let thr;
-
-        if (masaKerja >= 12) {
-            thr = upah;
-        } else {
-            thr = (masaKerja / 12) * upah;
-        }
+        const thr = masaKerja >= 12
+            ? upah
+            : (masaKerja / 12) * upah;
 
         amount.textContent = formatRupiah(thr);
 
@@ -78,4 +85,4 @@ if (form) {
 
         result.classList.add("show");
     });
-}
+})();
