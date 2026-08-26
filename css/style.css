@@ -448,3 +448,242 @@ footer {
         font-size: 27px;
     }
 }
+/* =========================
+   INVOICE GENERATOR
+   ========================= */
+
+.invoice-form {
+    max-width: 700px;
+}
+
+.invoice-form textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #1f2937;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.invoice-form textarea:focus {
+    outline: 3px solid #d1d5db;
+    outline-offset: 1px;
+}
+
+.secondary-button {
+    margin-top: 10px;
+    padding: 11px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f2937;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.secondary-button:hover {
+    background: #f3f4f6;
+}
+
+.secondary-button:focus-visible {
+    outline: 3px solid #9ca3af;
+    outline-offset: 2px;
+}
+
+.invoice-item {
+    margin-bottom: 18px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f9fafb;
+}
+
+.invoice-item label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.invoice-item input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f2937;
+    font-size: 16px;
+}
+
+.invoice-item input:focus {
+    outline: 3px solid #d1d5db;
+    outline-offset: 1px;
+}
+
+.remove-item {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #991b1b;
+    cursor: pointer;
+}
+
+.remove-item:hover {
+    background: #fef2f2;
+}
+
+.remove-item:focus-visible {
+    outline: 3px solid #9ca3af;
+    outline-offset: 2px;
+}
+
+.invoice-preview {
+    display: none;
+    max-width: 800px;
+    margin: 35px auto 0;
+    padding: 0 24px;
+}
+
+.invoice-preview.show {
+    display: block;
+}
+
+.invoice-paper {
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.invoice-header h2 {
+    margin: 0 0 8px;
+}
+
+.invoice-header p {
+    margin: 4px 0;
+    color: #6b7280;
+    white-space: pre-line;
+}
+
+.invoice-customer {
+    margin: 25px 0;
+}
+
+.invoice-customer p {
+    margin: 6px 0 0;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-table th,
+.invoice-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.invoice-table th:nth-child(n + 2),
+.invoice-table td:nth-child(n + 2) {
+    text-align: right;
+}
+
+.invoice-total {
+    max-width: 350px;
+    margin: 25px 0 0 auto;
+}
+
+.invoice-total > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 8px 0;
+}
+
+.invoice-grand-total {
+    margin-top: 8px;
+    padding-top: 15px !important;
+    border-top: 2px solid #111827;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.print-button {
+    margin-top: 30px;
+    border: 0;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+
+    .invoice-preview {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .invoice-paper {
+        padding: 22px;
+    }
+
+    .invoice-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .invoice-table {
+        font-size: 14px;
+    }
+
+    .invoice-table th,
+    .invoice-table td {
+        padding: 9px 5px;
+    }
+
+    .invoice-total {
+        max-width: none;
+    }
+}
+
+@media print {
+
+    body {
+        background: #ffffff;
+    }
+
+    header,
+    footer,
+    .calculator-intro,
+    .invoice-form,
+    .info,
+    .print-button {
+        display: none !important;
+    }
+
+    .invoice-preview {
+        display: block !important;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .invoice-paper {
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+    }
+}
