@@ -14,6 +14,10 @@ body {
     line-height: 1.6;
 }
 
+/* =========================
+   HEADER & NAVIGATION
+   ========================= */
+
 header {
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
@@ -29,6 +33,13 @@ nav {
     gap: 20px;
 }
 
+/* Semua link di navbar tidak bergaris secara default */
+nav a {
+    color: #374151;
+    text-decoration: none;
+}
+
+/* Logo */
 .logo {
     color: #111827;
     font-size: 24px;
@@ -36,6 +47,11 @@ nav {
     text-decoration: none;
 }
 
+.logo:hover {
+    text-decoration: none;
+}
+
+/* Link navbar */
 .nav-links {
     display: flex;
     align-items: center;
@@ -50,6 +66,22 @@ nav {
 .nav-links a:hover {
     text-decoration: underline;
 }
+
+/* Tombol/link kembali di halaman kalkulator */
+nav > a:not(.logo):hover {
+    text-decoration: underline;
+}
+
+/* Fokus keyboard */
+nav a:focus-visible {
+    outline: 3px solid #9ca3af;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* =========================
+   HERO
+   ========================= */
 
 .hero {
     max-width: 1100px;
@@ -72,6 +104,10 @@ nav {
     font-size: 20px;
 }
 
+/* =========================
+   SEARCH
+   ========================= */
+
 .search {
     width: 100%;
     max-width: 550px;
@@ -87,6 +123,10 @@ nav {
     outline: 3px solid #d1d5db;
     outline-offset: 1px;
 }
+
+/* =========================
+   TOOLS
+   ========================= */
 
 .tools {
     max-width: 1100px;
@@ -125,6 +165,10 @@ nav {
     color: #6b7280;
 }
 
+/* =========================
+   BUTTON
+   ========================= */
+
 .button {
     display: inline-block;
     padding: 11px 17px;
@@ -136,7 +180,9 @@ nav {
 }
 
 .button:hover {
+    color: #ffffff;
     opacity: 0.85;
+    text-decoration: none;
 }
 
 .button:focus-visible {
@@ -144,10 +190,18 @@ nav {
     outline-offset: 2px;
 }
 
+/* =========================
+   COMING SOON
+   ========================= */
+
 .coming-soon {
     color: #6b7280;
     font-size: 14px;
 }
+
+/* =========================
+   ABOUT
+   ========================= */
 
 .about {
     max-width: 700px;
@@ -159,6 +213,10 @@ nav {
     line-height: 1.7;
 }
 
+/* =========================
+   FOOTER
+   ========================= */
+
 footer {
     padding: 30px 20px;
     background: #ffffff;
@@ -167,20 +225,27 @@ footer {
     text-align: center;
 }
 
+/* =========================
+   CALCULATOR PAGE
+   ========================= */
+
 .calculator-page {
     max-width: 900px;
     margin: 0 auto;
     padding: 50px 24px 80px;
 }
 
+/* Judul kalkulator */
 .calculator-intro {
-    margin-bottom: 35px;
+    width: 100%;
+    margin: 0 auto 35px;
     text-align: center;
 }
 
 .calculator-intro h1 {
-    margin-bottom: 12px;
+    margin: 0 0 12px;
     font-size: 40px;
+    line-height: 1.2;
 }
 
 .calculator-intro p {
@@ -189,6 +254,7 @@ footer {
     color: #6b7280;
 }
 
+/* Kotak kalkulator */
 .calculator {
     max-width: 600px;
     margin: 0 auto;
@@ -197,6 +263,10 @@ footer {
     border: 1px solid #e5e7eb;
     border-radius: 18px;
 }
+
+/* =========================
+   FORM
+   ========================= */
 
 .form-group {
     margin-bottom: 22px;
@@ -215,6 +285,7 @@ footer {
     font-size: 14px;
 }
 
+/* Input kalkulator */
 .calculator input {
     width: 100%;
     padding: 14px;
@@ -229,6 +300,10 @@ footer {
     outline: 3px solid #d1d5db;
     outline-offset: 1px;
 }
+
+/* =========================
+   CALCULATE BUTTON
+   ========================= */
 
 .calculator button {
     width: 100%;
@@ -250,6 +325,10 @@ footer {
     outline: 3px solid #9ca3af;
     outline-offset: 2px;
 }
+
+/* =========================
+   RESULT
+   ========================= */
 
 .result {
     display: none;
@@ -278,6 +357,10 @@ footer {
     font-size: 14px;
 }
 
+/* =========================
+   ERROR
+   ========================= */
+
 .error {
     display: none;
     margin-top: 15px;
@@ -291,6 +374,10 @@ footer {
 .error.show {
     display: block;
 }
+
+/* =========================
+   INFORMATION
+   ========================= */
 
 .info {
     max-width: 600px;
@@ -311,13 +398,19 @@ footer {
     font-size: 13px;
 }
 
+/* =========================
+   MOBILE
+   ========================= */
+
 @media (max-width: 600px) {
+
     nav {
         align-items: flex-start;
         flex-direction: column;
     }
 
     .nav-links {
+        width: 100%;
         flex-wrap: wrap;
         gap: 12px 18px;
     }
