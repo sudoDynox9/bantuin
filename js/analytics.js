@@ -1,3 +1,4 @@
+```javascript
 (() => {
     "use strict";
 
@@ -11,4 +12,21 @@
 
     gtag("js", new Date());
     gtag("config", "G-8XQLJN1BW");
+
+    const toolLinks = document.querySelectorAll("[data-tool]");
+
+    toolLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            const tool = link.dataset.tool;
+
+            if (!tool) {
+                return;
+            }
+
+            gtag("event", "tool_click", {
+                tool_name: tool
+            });
+        });
+    });
 })();
+```
