@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Kalkulator Diskon Bantuin untuk menghitung harga setelah diskon dan jumlah uang yang dihemat."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <title>Kalkulator Diskon - Bantuin</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="icon"
+        href="../favicon.svg"
+        type="image/svg+xml"
+    >
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a
+            class="logo"
+            href="../index.html"
+        >
+            Bantuin
+        </a>
+
+        <a
+            href="../index.html"
+        >
+            ← Kembali
+        </a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="calculator-intro">
+
+        <h1>
+            Kalkulator Diskon
+        </h1>
+
+        <p>
+            Hitung harga setelah diskon dan berapa uang
+            yang bisa kamu hemat.
+        </p>
+
+    </section>
+
+    <section class="calculator">
+
+        <form id="diskonForm">
+
+            <div class="form-group">
+
+                <label for="harga">
+                    Harga awal
+                </label>
+
+                <span class="description">
+                    Masukkan harga sebelum diskon.
+                </span>
+
+                <input
+                    type="number"
+                    id="harga"
+                    name="harga"
+                    min="1"
+                    step="1"
+                    inputmode="numeric"
+                    placeholder="Contoh: 500000"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="diskon">
+                    Besar diskon
+                </label>
+
+                <span class="description">
+                    Masukkan persentase diskon antara 0% dan 100%.
+                </span>
+
+                <input
+                    type="number"
+                    id="diskon"
+                    name="diskon"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    inputmode="decimal"
+                    placeholder="Contoh: 20"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                Hitung Diskon
+            </button>
+
+            <div
+                id="error"
+                class="error"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+        <div
+            id="result"
+            class="result"
+            aria-live="polite"
+        >
+
+            <h2>
+                Harga Setelah Diskon
+            </h2>
+
+            <div
+                id="amount"
+                class="amount"
+            >
+                Rp0
+            </div>
+
+            <div
+                id="calculation"
+                class="calculation"
+            ></div>
+
+        </div>
+
+    </section>
+
+    <section class="info">
+
+        <h2>
+            Bagaimana cara menghitung diskon?
+        </h2>
+
+        <p>
+            Jumlah diskon dihitung dengan mengalikan harga awal
+            dengan persentase diskon.
+        </p>
+
+        <p>
+            Rumusnya:
+        </p>
+
+        <p>
+            <strong>
+                Jumlah diskon = harga awal × persentase diskon
+            </strong>
+        </p>
+
+        <p>
+            Setelah mendapatkan jumlah diskon, kurangi harga awal
+            dengan jumlah tersebut untuk mendapatkan harga akhir.
+        </p>
+
+        <p>
+            <strong>
+                Harga akhir = harga awal − jumlah diskon
+            </strong>
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Bantuin. Semua hak dilindungi.
+</footer>
+
+<script
+    src="../js/diskon.js"
+    defer
+></script>
+
+</body>
+</html>
