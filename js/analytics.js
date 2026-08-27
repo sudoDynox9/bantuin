@@ -12,18 +12,38 @@
     gtag("js", new Date());
     gtag("config", "G-8XQLJN1BW");
 
-    const toolLinks = document.querySelectorAll("[data-tool]");
+    document.addEventListener("DOMContentLoaded", () => {
+        const toolLinks = document.querySelectorAll("[data-tool]");
 
-    toolLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-            const tool = link.dataset.tool;
+        toolLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+                const tool = link.dataset.tool;
+                const destination = link.href;
 
-            if (!tool) {
-                return;
-            }
+                if (!tool || !destination) {
+                    return;
+                }
 
-            gtag("event", "tool_click", {
-                tool_name: tool
+                event.preventDefault();
+
+                let navigated = false;
+
+                const navigate = () => {
+                    if (navigated) {
+                        return;
+                    }
+
+                    navigated = true;
+                    window.location.href = destination;
+                };
+
+                gtag("event", "tool_click", {
+                    tool_name: tool,
+                    event_callback: navigate,
+                    event_timeout: 1000
+                });
+
+                setTimeout(navigate, 1200);
             });
         });
     });
