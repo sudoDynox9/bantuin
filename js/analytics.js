@@ -1,41 +1,129 @@
-"use strict";
+(function () {
+    "use strict";
 
-window.dataLayer = window.dataLayer || [];
+    const MEASUREMENT_ID = "G-8XQLJN1BW";
 
-function gtag() {
-    window.dataLayer.push(arguments);
-}
+    /*
+     * =========================================================
+     * DATA LAYER
+     * =========================================================
+     */
 
-window.gtag = gtag;
+    window.dataLayer = window.dataLayer || [];
 
-gtag("js", new Date());
-gtag("config", "G-8XQLJN1BW", {
-    debug_mode: true
-});
+    /*
+     * =========================================================
+     * GTAG
+     * =========================================================
+     */
 
-function initToolTracking() {
-    const toolLinks = document.querySelectorAll("[data-tool]");
+    function gtag() {
+        window.dataLayer.push(arguments);
+    }
 
-    toolLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
-            const tool = link.dataset.tool;
+    window.gtag = window.gtag || gtag;
 
-            if (!tool) {
+    /*
+     * =========================================================
+     * LOAD GOOGLE TAG
+     * =========================================================
+     */
+
+    if (!document.querySelector(
+        'script[src*="googletagmanager.com/gtag/js"]'
+    )) {
+        const script = document.createElement("script");
+
+        script.async = true;
+        script.src =
+            "https://www.googletagmanager.com/gtag/js?id=" +
+            encodeURIComponent(MEASUREMENT_ID);
+
+        document.head.appendChild(script);
+    }
+
+    /*
+     * =========================================================
+     * INITIALIZE GOOGLE ANALYTICS
+     * =========================================================
+     */
+
+    gtag("js", new Date());
+
+    gtag("config", MEASUREMENT_ID, {
+        send_page_view: true,
+
+        /*
+         * Aktifkan sementara untuk testing DebugView.
+         */
+        debug_mode: true
+    });
+
+    /*
+     * =========================================================
+     * TOOL CLICK TRACKING
+     * =========================================================
+     */
+
+    function setupToolTracking() {
+        const toolLinks = document.querySelectorAll("[data-tool]");
+
+        toolLinks.forEach(function (link) {
+            /*
+             * Jangan memasang listener berkali-kali
+             * jika script dijalankan ulang.
+             */
+            if (link.dataset.analyticsBound === "true") {
                 return;
             }
 
-            gtag("event", "tool_click", {
-                tool_name: tool,
-                debug_mode: true,
-                event_callback: navigate,
-                event_timeout: 1000
+            link.dataset.analyticsBound = "true";
+
+            link.addEventListener("click", function (event) {
+                const tool = link.dataset.tool;
+                const destination = link.href;
+
+                if (!tool || !destination) {
+                    return;
+                }
+
+                /*
+                 * Hentikan navigasi sementara.
+                 */
+                event.preventDefault();
+
+                /*
+                 * Kirim event ke Google Analytics.
+                 */
+                gtag("event", "tool_click", {
+                    tool_name: tool,
+                    debug_mode: true
+                });
+
+                /*
+                 * Beri waktu bagi request Analytics
+                 * untuk dikirim sebelum pindah halaman.
+                 */
+                setTimeout(function () {
+                    window.location.href = destination;
+                }, 1000);
             });
         });
-    });
-}
+    }
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initToolTracking);
-} else {
-    initToolTracking();
-}
+    /*
+     * =========================================================
+     * DOM READY
+     * =========================================================
+     */
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            setupToolTracking
+        );
+    } else {
+        setupToolTracking();
+    }
+
+})();
