@@ -1,6 +1,12 @@
 (() => {
     "use strict";
 
+    const GA_ID = "G-8XQLJN1BW";
+
+    // ==========================================
+    // Google Analytics dataLayer + gtag
+    // ==========================================
+
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {
@@ -9,8 +15,36 @@
 
     window.gtag = gtag;
 
+    // ==========================================
+    // Load Google Analytics
+    // ==========================================
+
+    if (!document.querySelector('script[data-google-analytics]')) {
+        const script = document.createElement("script");
+
+        script.async = true;
+        script.src =
+            "https://www.googletagmanager.com/gtag/js?id=" +
+            encodeURIComponent(GA_ID);
+
+        script.dataset.googleAnalytics = "true";
+
+        document.head.appendChild(script);
+    }
+
+    // ==========================================
+    // Initialize Google Analytics
+    // ==========================================
+
     gtag("js", new Date());
-    gtag("config", "G-8XQLJN1BW");
+
+    gtag("config", GA_ID, {
+        send_page_view: true
+    });
+
+    // ==========================================
+    // Tool click tracking
+    // ==========================================
 
     document.addEventListener("DOMContentLoaded", () => {
         const toolLinks = document.querySelectorAll("[data-tool]");
