@@ -9,7 +9,9 @@ function gtag() {
 window.gtag = gtag;
 
 gtag("js", new Date());
-gtag("config", "G-8XQLJN1BW");
+gtag("config", "G-8XQLJN1BW", {
+    debug_mode: true
+});
 
 function initToolTracking() {
     const toolLinks = document.querySelectorAll("[data-tool]");
@@ -23,7 +25,10 @@ function initToolTracking() {
             }
 
             gtag("event", "tool_click", {
-                tool_name: tool
+                tool_name: tool,
+                debug_mode: true,
+                event_callback: navigate,
+                event_timeout: 1000
             });
         });
     });
