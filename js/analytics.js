@@ -1,84 +1,48 @@
-(() => {
-    "use strict";
+"use strict";
 
-    const GA_ID = "G-8XQLJN1BW";
+window.dataLayer = window.dataLayer || [];
 
-    // ==========================================
-    // Google Analytics dataLayer + gtag
-    // ==========================================
+function gtag() {
+    window.dataLayer.push(arguments);
+}
 
-    window.dataLayer = window.dataLayer || [];
+window.gtag = gtag;
 
-    function gtag() {
-        window.dataLayer.push(arguments);
+gtag("js", new Date());
+gtag("config", "G-8XQLJN1BW");
+
+document.addEventListener("click", function (event) {
+    const link = event.target.closest("[data-tool]");
+
+    if (!link) {
+        return;
     }
 
-    window.gtag = gtag;
+    const tool = link.dataset.tool;
+    const destination = link.href;
 
-    // ==========================================
-    // Load Google Analytics
-    // ==========================================
-
-    if (!document.querySelector('script[data-google-analytics]')) {
-        const script = document.createElement("script");
-
-        script.async = true;
-        script.src =
-            "https://www.googletagmanager.com/gtag/js?id=" +
-            encodeURIComponent(GA_ID);
-
-        script.dataset.googleAnalytics = "true";
-
-        document.head.appendChild(script);
+    if (!tool || !destination) {
+        return;
     }
 
-    // ==========================================
-    // Initialize Google Analytics
-    // ==========================================
+    event.preventDefault();
 
-    gtag("js", new Date());
+    let navigated = false;
 
-    gtag("config", GA_ID, {
-        send_page_view: true
+    function navigate() {
+        if (navigated) {
+            return;
+        }
+
+        navigated = true;
+        window.location.href = destination;
+    }
+
+    gtag("event", "tool_click", {
+        tool_name: tool,
+        event_callback: navigate,
+        event_timeout: 1000
     });
 
-    // ==========================================
-    // Tool click tracking
-    // ==========================================
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const toolLinks = document.querySelectorAll("[data-tool]");
-
-        toolLinks.forEach((link) => {
-            link.addEventListener("click", (event) => {
-                const tool = link.dataset.tool;
-                const destination = link.href;
-
-                if (!tool || !destination) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                let navigated = false;
-
-                const navigate = () => {
-                    if (navigated) {
-                        return;
-                    }
-
-                    navigated = true;
-                    window.location.href = destination;
-                };
-
-                gtag("event", "tool_click", {
-                    tool_name: tool,
-                    event_callback: navigate,
-                    event_timeout: 1000
-                });
-
-                setTimeout(navigate, 1200);
-            });
-        });
-    });
-})();
+    setTimeout(navigate, 1200);
+});
