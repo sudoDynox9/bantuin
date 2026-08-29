@@ -1,40 +1,89 @@
-(function () {
-    "use strict";
+"use strict";
 
+/*
+ * Bantuin - Google Analytics 4
+ * Measurement ID: G-8XQLJN1BW
+ */
+
+(function () {
     const MEASUREMENT_ID = "G-8XQLJN1BW";
 
     /*
-     * =========================================================
-     * DATA LAYER
-     * =========================================================
+     * Ubah menjadi true hanya saat melakukan pengujian
+     * DebugView.
+     *
+     * Untuk website normal gunakan false.
+     */
+    const DEBUG_MODE = false;
+
+    /*
+     * --------------------------------------------------
+     * 1. Siapkan dataLayer dan gtag resmi
+     * --------------------------------------------------
      */
 
     window.dataLayer = window.dataLayer || [];
-
-    /*
-     * =========================================================
-     * GTAG
-     * =========================================================
-     */
 
     function gtag() {
         window.dataLayer.push(arguments);
     }
 
-    window.gtag = window.gtag || gtag;
+    window.gtag = gtag;
+
 
     /*
-     * =========================================================
-     * LOAD GOOGLE TAG
-     * =========================================================
+     * --------------------------------------------------
+     * 2. Consent Mode
+     * --------------------------------------------------
+     *
+     * Bantuin belum menggunakan consent banner/CMP.
+     *
+     * Analytics:
+     *   granted
+     *
+     * Advertising:
+     *   denied
+     *
+     * Jadi Analytics tetap dapat melakukan pengukuran,
+     * tetapi storage untuk iklan tidak diberikan.
      */
 
-    if (!document.querySelector(
-        'script[src*="googletagmanager.com/gtag/js"]'
-    )) {
+    gtag("consent", "default", {
+        analytics_storage: "granted",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied"
+    });
+
+
+    /*
+     * --------------------------------------------------
+     * 3. Inisialisasi Google tag
+     * --------------------------------------------------
+     */
+
+    gtag("js", new Date());
+
+    gtag("config", MEASUREMENT_ID, {
+        send_page_view: true
+    });
+
+
+    /*
+     * --------------------------------------------------
+     * 4. Muat Google tag secara dinamis
+     * --------------------------------------------------
+     */
+
+    if (
+        !document.querySelector(
+            'script[src*="googletagmanager.com/gtag/js"]'
+        )
+    ) {
         const script = document.createElement("script");
 
         script.async = true;
+
         script.src =
             "https://www.googletagmanager.com/gtag/js?id=" +
             encodeURIComponent(MEASUREMENT_ID);
@@ -42,44 +91,24 @@
         document.head.appendChild(script);
     }
 
-    /*
-     * =========================================================
-     * INITIALIZE GOOGLE ANALYTICS
-     * =========================================================
-     */
-
-    gtag("js", new Date());
-
-    gtag("config", MEASUREMENT_ID, {
-        send_page_view: true,
-
-        /*
-         * Aktifkan sementara untuk testing DebugView.
-         */
-        debug_mode: true
-    });
 
     /*
-     * =========================================================
-     * TOOL CLICK TRACKING
-     * =========================================================
+     * --------------------------------------------------
+     * 5. Tool click tracking
+     * --------------------------------------------------
      */
 
-    function setupToolTracking() {
+    function initializeToolTracking() {
         const toolLinks = document.querySelectorAll("[data-tool]");
 
-        toolLinks.forEach(function (link) {
-            /*
-             * Jangan memasang listener berkali-kali
-             * jika script dijalankan ulang.
-             */
-            if (link.dataset.analyticsBound === "true") {
+        toolLinks.forEach((link) => {
+            if (link.dataset.analyticsInitialized === "true") {
                 return;
             }
 
-            link.dataset.analyticsBound = "true";
+            link.dataset.analyticsInitialized = "true";
 
-            link.addEventListener("click", function (event) {
+            link.addEventListener("click", (event) => {
                 const tool = link.dataset.tool;
                 const destination = link.href;
 
@@ -87,43 +116,60 @@
                     return;
                 }
 
-                /*
-                 * Hentikan navigasi sementara.
-                 */
                 event.preventDefault();
 
-                /*
-                 * Kirim event ke Google Analytics.
-                 */
-                gtag("event", "tool_click", {
+                let navigated = false;
+
+                const navigate = () => {
+                    if (navigated) {
+                        return;
+                    }
+
+                    navigated = true;
+                    window.location.href = destination;
+                };
+
+                const eventParameters = {
                     tool_name: tool,
-                    debug_mode: true
-                });
+                    transport_type: "beacon",
+                    event_callback: navigate
+                };
+
+                if (DEBUG_MODE) {
+                    eventParameters.debug_mode = true;
+                }
+
+                gtag(
+                    "event",
+                    "tool_click",
+                    eventParameters
+                );
 
                 /*
-                 * Beri waktu bagi request Analytics
-                 * untuk dikirim sebelum pindah halaman.
+                 * Jangan membuat pengguna menunggu jika
+                 * Google Analytics tidak merespons.
                  */
-                setTimeout(function () {
-                    window.location.href = destination;
-                }, 1000);
+                setTimeout(navigate, 1000);
             });
         });
     }
 
+
     /*
-     * =========================================================
-     * DOM READY
-     * =========================================================
+     * --------------------------------------------------
+     * 6. Jalankan tracking setelah DOM siap
+     * --------------------------------------------------
      */
 
     if (document.readyState === "loading") {
         document.addEventListener(
             "DOMContentLoaded",
-            setupToolTracking
+            initializeToolTracking,
+            {
+                once: true
+            }
         );
     } else {
-        setupToolTracking();
+        initializeToolTracking();
     }
-
 })();
