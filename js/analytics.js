@@ -12,66 +12,51 @@
     window.gtag = gtag;
 
     gtag("js", new Date());
-
     gtag("config", MEASUREMENT_ID);
 
-
-    /*
-     * Catat klik pada tool Bantuin.
-     *
-     * Tidak menggunakan:
-     * - preventDefault()
-     * - event_callback
-     * - setTimeout()
-     *
-     * Navigasi browser tetap berjalan normal.
-     */
-    document.addEventListener(
-        "click",
-        (event) => {
-            if (event.button !== 0) {
-                return;
-            }
-
-            if (
-                event.ctrlKey ||
-                event.metaKey ||
-                event.shiftKey ||
-                event.altKey
-            ) {
-                return;
-            }
-
-            const link =
-                event.target.closest("a[data-tool]");
-
-            if (!link) {
-                return;
-            }
-
-            const tool =
-                link.dataset.tool;
-
-            if (!tool) {
-                return;
-            }
-
-            /*
-             * Google tag menerima event dan menangani
-             * transport-nya sendiri.
-             */
-            gtag(
-                "event",
-                "tool_click",
-                {
-                    tool_name: tool,
-                    transport_type: "beacon"
-                }
-            );
-        },
-        {
-            capture: true,
-            passive: true
+    document.addEventListener("click", (event) => {
+        if (event.button !== 0) {
+            return;
         }
-    );
+
+        // Jangan mengganggu Ctrl+klik, Cmd+klik,
+        // Shift+klik, atau Alt+klik.
+        if (
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+        ) {
+            return;
+        }
+
+        const link = event.target.closest("a[data-tool]");
+
+        if (!link) {
+            return;
+        }
+
+        const tool = link.dataset.tool;
+
+        if (!tool) {
+            return;
+        }
+
+        const destination = link.href;
+
+        if (!destination) {
+            return;
+        }
+
+        // Kirim event menggunakan Beacon transport.
+        // Tidak menggunakan event_callback.
+        // Tidak menggunakan setTimeout.
+        gtag("event", "tool_click", {
+            tool_name: tool,
+            transport_type: "beacon"
+        });
+
+        // Navigasi langsung.
+        window.location.href = destination;
+    });
 })();
