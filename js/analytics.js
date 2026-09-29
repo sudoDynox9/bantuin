@@ -3,17 +3,6 @@
 
     const MEASUREMENT_ID = "G-8XQLJN1BW";
 
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        window.dataLayer.push(arguments);
-    }
-
-    window.gtag = gtag;
-
-    gtag("js", new Date());
-    gtag("config", MEASUREMENT_ID);
-
     document.addEventListener("click", (event) => {
         if (event.button !== 0) {
             return;
