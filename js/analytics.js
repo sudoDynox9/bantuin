@@ -1,26 +1,11 @@
 (() => {
     "use strict";
 
-    const MEASUREMENT_ID = "G-8XQLJN1BW";
-
-    // Inisialisasi Google Analytics tanpa inline script.
-    window.dataLayer = window.dataLayer || [];
-
-    window.gtag = function () {
-        window.dataLayer.push(arguments);
-    };
-
-    window.gtag("js", new Date());
-    window.gtag("config", MEASUREMENT_ID);
-
-    // Tracking klik pada kartu tools.
     document.addEventListener("click", (event) => {
         if (event.button !== 0) {
             return;
         }
 
-        // Jangan mengganggu Ctrl+klik, Cmd+klik,
-        // Shift+klik, atau Alt+klik.
         if (
             event.ctrlKey ||
             event.metaKey ||
@@ -48,7 +33,7 @@
             return;
         }
 
-        window.gtag("event", "tool_click", {
+        gtag("event", "tool_click", {
             tool_name: tool,
             transport_type: "beacon"
         });
