@@ -6,6 +6,8 @@
             return;
         }
 
+        // Jangan mengganggu Ctrl+klik, Cmd+klik,
+        // Shift+klik, atau Alt+klik.
         if (
             event.ctrlKey ||
             event.metaKey ||
@@ -38,6 +40,7 @@
             transport_type: "beacon"
         });
 
+        // Navigasi langsung.
         window.location.href = destination;
     });
 })();
